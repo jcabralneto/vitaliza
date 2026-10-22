@@ -18,12 +18,21 @@ Cada decisão de tratamento de dados ou premissa de cálculo entra aqui: data, d
 
 **Justificativa:** o faturamento é apurado no fuso da empresa; duplicatas com horário idêntico são falha de cobrança, não receita; líquido reflete o que efetivamente entra no caixa.
 
-**Pendências:**
-- As taxas foram reconstruídas para bater com a resposta de referência. Confirmar com a tabela oficial do enunciado.
+**Taxas confirmadas** no enunciado, seção 03 (verificado em 2026-10-22).
+
+**Pendência:**
 - Estornos/chargebacks lançados no mês (set/26: −R$ 3.058,20) são excluídos, mas não descontados. Definir se a visão é caixa ou competência.
 
 ## 2026-10-22 — Tamanho da base
 
-**Decisão:** base ativa = `status_atual == 'ativa'` em `assinaturas.csv` → 14.813 assinantes (de 32.643 históricos).
+**Decisão:** base pagante ativa = `status_atual == 'ativa'` e `plano_atual != 'cortesia'` em `assinaturas.csv` → **14.753** (14.813 ativas − 60 cortesias).
 
-**Justificativa:** bate com a estimativa independente via pagamentos (mensal pago ≤31 dias + anual pago ≤365 dias = 14.846).
+**Justificativa:** bate exatamente com o enunciado (14.753; 57% anual / 43% mensal; App Store 36,6%, Google Play 33,6%, cartão 20,3%, Pix 9,5%). Cortesia não paga e não entra na base pagante.
+
+**Limite:** `assinaturas.csv` é retrato de 01/10/2026. Para ativos em datas anteriores (ex.: início de cada mês, para churn), reconstruir a partir de `eventos_assinatura.csv`.
+
+## 2026-10-22 — Heatmaps
+
+**Decisão:** zips extraídos em `dados/brutos/heatmaps_90d/{2026-07-31,2026-09-30}/` e zips removidos; pasta renomeada de `heatmaps/` para `heatmaps_90d/` para seguir o dicionário.
+
+**Verificação:** 12.426 e 13.047 PNGs, iguais ao dicionário. Metadados `__MACOSX` da extração descartados.
