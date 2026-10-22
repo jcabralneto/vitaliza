@@ -1,0 +1,15 @@
+# Dados ficam fora do repositório
+/dados/
+
+# Segredos
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
