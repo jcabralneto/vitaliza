@@ -22,6 +22,8 @@ Todo problema de qualidade ou regra de cálculo entra na tabela: uma linha por d
 | 2026-10-22 | `atividades.parquet` | Consistência | `tipo` em dois idiomas: 11 valores para 7 tipos. Todo o inglês vem do `app`, a partir de 15/04/2026 | Padronizar em português antes de contar por tipo (mapa proposto, ainda não aplicado) | `run`→`corrida`, `walk`→`caminhada`, `strength`→`forca`, `ride`→`pedal` | 376.930 (30%): 162.108 + 88.509 + 85.548 + 40.765 | Leo + Claude |
 | 2026-10-22 | `atividades.parquet` | Completude | Treinos sem distância | Não é erro: manter nulo | Vídeo (sem percurso) ou ar livre com `gps_ok = False` | 574.835 (567.511 vídeo + 7.324 GPS falho) | Leo + Claude |
 | 2026-10-22 | `atividades.parquet` | Consistência | `gps_ok = True` em todos os treinos em vídeo; ar livre com GPS falho tem distância mas não ritmo | Não interpretar `gps_ok` como "tinha GPS" | Cruzamento `tipo` × `gps_ok` | 567.511 vídeo; 7.455 sem ritmo | Leo + Claude |
+| 2026-10-22 | `uso_mensal.csv` | Temporalidade | Mês sem treino muda de forma na virada: linha ausente em 2025, linha com zero em 2026. Média do arquivo cai de 265 para 118 min sem mudança de comportamento | Comparar médias entre anos só com `minutos > 0`; ao montar variáveis por usuário e mês, linha ausente em 2025 vale zero | `minutos == 0`; ausência de `user_id` × `mes` em 2025 | 303.735 linhas zeradas (todas em 2026) | Leo + Claude |
+| 2026-10-22 | `uso_mensal.csv` | Temporalidade | Linhas zeradas com `sessoes_app > 0` (abriu o app sem treinar) só existem a partir de 2026 | Usar como variável só em janelas de 2026; não reconstruível para 2025 | `minutos == 0` e `sessoes_app > 0` | 262.242 (86% das zeradas) | Leo + Claude |
 | 2026-10-22 | `heatmaps_90d/` | — | Imagens entregues em zip | Extrair em `2026-07-31/` e `2026-09-30/`; remover zips e `__MACOSX` | Contagem igual ao dicionário | 12.426 + 13.047 imagens | Leo + Claude |
 
 ---
@@ -69,3 +71,11 @@ Código: `notebooks/04_consistencia_atividades.ipynb`. Primeiro registrado como 
 A troca é abrupta: nenhum treino em inglês até 14/04/2026; a partir de 15/04, ~99% dos treinos pareados do `app` saem em inglês. Garmin e Apple Health nunca mudaram. Hipótese: versão nova do app. O resíduo em português no app (~1%, estável por mês) pode ser quem não atualizou — **não verificado** (exige `versao_app` de `usuarios.csv`).
 
 **Hipótese para o objetivo 2:** abril de 2026 foi o pior mês de churn (8,1%). Uma versão nova do app na mesma quinzena é suspeita, não causa; testar com `versao_app` e `tickets_suporte.csv` do período.
+
+### Uso mensal na virada do ano
+
+Código: `notebooks/05_temporalidade_uso_mensal.ipynb`. O dicionário não avisa a mudança de regra de registro. As linhas com treino seguem contínuas (14.048 em out/25, 13.624 em dez/25, 15.433 em jan/26); o salto de 13.624 para 41.130 linhas vem só das linhas zeradas.
+
+**Risco para o modelo (objetivo 4):** com separação no tempo, variáveis de inatividade calculadas sobre o arquivo como está fariam o modelo aprender a mudança de registro entre os anos, não o comportamento.
+
+**Pendente:** definir o universo de cada mês (quem deveria ter linha) com `assinaturas.csv`/`eventos_assinatura.csv` para completar 2025 com zeros; conferir `minutos` contra `duracao_min` de `atividades.parquet` em 2026.
