@@ -39,6 +39,19 @@ vitaliza-grupo-01/
 
 **Regra central: o bruto nunca é editado.** `dados/brutos/` é somente leitura no sistema de arquivos. Toda limpeza gera um arquivo novo em `dados/processados/`, por código versionado, e toda decisão vai para `decisoes.md`.
 
+## Ambiente
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+## Entregas
+
+| Notebook | Pergunta | Resultado |
+|---|---|---|
+| [`01_pagantes_ativos`](notebooks/01_pagantes_ativos.ipynb) | Pagantes ativos no corte | 14.753 (bate com o enunciado) |
+
 ## Como montar os dados
 
 `dados/` não é versionado. Depois de clonar:
