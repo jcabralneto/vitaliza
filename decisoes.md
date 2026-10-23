@@ -25,9 +25,13 @@ Cada decisão de tratamento de dados ou premissa de cálculo entra aqui: data, d
 
 ## 2026-10-22 — Tamanho da base
 
-**Decisão:** base pagante ativa = `status_atual == 'ativa'` e `plano_atual != 'cortesia'` em `assinaturas.csv` → **14.753** (14.813 ativas − 60 cortesias).
+**Decisão (revisada):** base pagante ativa = `status_atual == 'ativa'` em `assinaturas.csv`, excluindo contas de teste (e-mail `@vitaliza.com.br` em `usuarios.csv`, normalizado) → **14.753** (14.813 − 60). Código: `notebooks/01_pagantes_ativos.ipynb`.
 
-**Justificativa:** bate exatamente com o enunciado (14.753; 57% anual / 43% mensal; App Store 36,6%, Google Play 33,6%, cartão 20,3%, Pix 9,5%). Cortesia não paga e não entra na base pagante.
+**Justificativa:** bate exatamente com o enunciado (14.753; 57% anual / 43% mensal; App Store 36,6%, Google Play 33,6%, cartão 20,3%, Pix 9,5%). A primeira versão filtrava `plano_atual == 'cortesia'`; dá o mesmo resultado porque as 60 contas de teste são as 60 cortesias, mas o critério de negócio é a conta de teste, e o filtro por plano quebraria se surgisse uma cortesia real.
+
+**Conferência manual:** 3 contas sorteadas (seed 42) têm cobrança aprovada recente em `pagamentos.csv`; a conta de teste conferida não tem nenhuma.
+
+**Observação:** a conta de teste u_a044e148 tem assinatura iniciada em 2025-01-10, antes do cadastro (2025-06-04) — datas inconsistentes nas contas internas.
 
 **Limite:** `assinaturas.csv` é retrato de 01/10/2026. Para ativos em datas anteriores (ex.: início de cada mês, para churn), reconstruir a partir de `eventos_assinatura.csv`.
 
