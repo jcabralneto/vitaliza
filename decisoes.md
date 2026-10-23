@@ -17,6 +17,11 @@ Todo problema de qualidade ou regra de cálculo entra na tabela: uma linha por d
 | 2026-10-22 | `onboarding.csv` | Completude | Respostas preenchidas sem conteúdo (`nada`, `😂`, `.`, `x`, `sla`, `kkkk`, `asdf`, `ok`, `-`, `nao sei`) | Marcar como **sem conteúdo**, separado de nulo; não apagar | Texto normalizado na lista | 13.768 em `objetivo_texto`; 11.515 em `como_conheceu` | Leo + Claude |
 | 2026-10-22 | `onboarding.csv` | Completude | `nivel` e `dias_por_semana` vazios, sem o dicionário dizer que são opcionais | Marcar como "não informado"; não imputar | Nulo | 4.513 (7,1%) e 6.368 (10,0%) | Leo + Claude |
 | 2026-10-22 | `onboarding.csv` | Validade | `dias_por_semana` em texto livre: `3`, `3x`, `3 vezes` | **Pendente:** extrair o número | Valor não numérico | 24.034 | — |
+| 2026-10-22 | `atividades.parquet` | Validade | Distância incompatível com o próprio treino (até 10.012 km num pedal de 160 min) | Marcar como distância inválida; quando precisar, usar a distância implícita `duracao_min / ritmo_min_km` | \|distância ÷ (duração ÷ ritmo) − 1\| > 10%. Substitui o corte fixo de 200 km | 999 (948 acima de 200 km + 51 abaixo) | Leo + Claude |
+| 2026-10-22 | `atividades.parquet` | Validade | Duração zero | Marcar como duração inválida; não usar em médias de duração | `duracao_min == 0` (nenhuma negativa) | 3.649 (1.991 com distância preenchida) | Leo + Claude |
+| 2026-10-22 | `atividades.parquet` | Validade | `tipo` em dois idiomas: `corrida`/`run`, `pedal`/`ride`, `caminhada`/`walk`, `forca`/`strength` | Unificar em português antes de contar por tipo | Mapeamento fixo dos 4 pares | 376.930 em inglês | Leo + Claude |
+| 2026-10-22 | `atividades.parquet` | Completude | Treinos sem distância | Não é erro: manter nulo | Vídeo (sem percurso) ou ar livre com `gps_ok = False` | 574.835 (567.511 vídeo + 7.324 GPS falho) | Leo + Claude |
+| 2026-10-22 | `atividades.parquet` | Consistência | `gps_ok = True` em todos os treinos em vídeo; ar livre com GPS falho tem distância mas não ritmo | Não interpretar `gps_ok` como "tinha GPS" | Cruzamento `tipo` × `gps_ok` | 567.511 vídeo; 7.455 sem ritmo | Leo + Claude |
 | 2026-10-22 | `heatmaps_90d/` | — | Imagens entregues em zip | Extrair em `2026-07-31/` e `2026-09-30/`; remover zips e `__MACOSX` | Contagem igual ao dicionário | 12.426 + 13.047 imagens | Leo + Claude |
 
 ---
@@ -52,3 +57,7 @@ Conferência manual: 3 contas sorteadas (seed 42) têm cobrança aprovada recent
 ### Completude do onboarding
 
 Código: `notebooks/02_qualidade_onboarding.ipynb`. Somando nulos e respostas sem conteúdo, `objetivo_texto` fica vazio na prática em cerca de 30% das contas, não 8,6%. Para a extração com IA (objetivo 5 do case), essas respostas não devem ir ao modelo: custam e não informam. A lista de respostas sem conteúdo foi montada a partir das respostas curtas mais repetidas e pode crescer.
+
+### Validade das atividades
+
+Código: `notebooks/03_qualidade_atividades.ipynb`. O roteiro usa o corte de 200 km; adotamos a regra do ritmo porque usa o próprio treino como referência. Nos treinos válidos, distância ÷ (duração ÷ ritmo) fica em 1,000 ± 0,3%; nos acima de 200 km, de 40 a 130 vezes — sem fator único, então não é erro de unidade a converter, é valor corrompido. O ritmo informado segue plausível (1,8 a 13 min/km), por isso a distância implícita é a substituta. Três treinos acima de 200 km não são avaliáveis pelo ritmo (duração zero ou sem ritmo) e continuam marcados pelo corte de 200 km.

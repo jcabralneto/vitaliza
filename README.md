@@ -52,6 +52,7 @@ python3 -m venv .venv
 |---|---|---|
 | [`01_pagantes_ativos`](notebooks/01_pagantes_ativos.ipynb) | Pagantes ativos no corte | 14.753 (bate com o enunciado) |
 | [`02_qualidade_onboarding`](notebooks/02_qualidade_onboarding.ipynb) | Completude do `onboarding.csv` | ~30% sem objetivo na prática (8,6% nulo + 21,5% sem conteúdo) |
+| [`03_qualidade_atividades`](notebooks/03_qualidade_atividades.ipynb) | Validade de distância e duração em `atividades.parquet` | 999 distâncias impossíveis pelo ritmo; 3.649 durações zero |
 
 ## Como montar os dados
 
