@@ -28,7 +28,7 @@ vitaliza-grupo-01/
 ├── AGENTS.md           regras do projeto para pessoas e agentes de IA
 ├── CLAUDE.md           aponta para AGENTS.md
 ├── decisoes.md         registro de decisões de tratamento e premissas
-├── docs/               enunciado e dicionário de dados
+├── docs/               enunciado e dicionário de dados (PDF oficial + .md para agentes)
 ├── dados/              fora do repositório (ver abaixo)
 │   ├── brutos/         só leitura: 12 arquivos + heatmaps_90d/
 │   └── processados/    tabelas intermediárias geradas por código

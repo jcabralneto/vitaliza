@@ -6,7 +6,7 @@ Case do Módulo 2 (Inteli). Análise de assinaturas e pagamentos da Vitaliza.
 
 | Pasta | Conteúdo | Regra |
 |---|---|---|
-| `docs/` | Enunciado e dicionário de dados | Consultar antes de qualquer análise |
+| `docs/` | Enunciado e dicionário de dados: PDFs oficiais e versões `.md` (`enunciado.md`, `dicionario_dados.md`) | Ler os `.md` antes de qualquer análise; em caso de dúvida, o PDF prevalece |
 | `dados/brutos/` | Os 12 arquivos originais e `heatmaps_90d/` | **Só leitura. Nunca editar, sobrescrever ou apagar.** |
 | `dados/processados/` | Tabelas intermediárias do grupo | Sempre geradas por código em `src/` ou `notebooks/` |
 | `notebooks/` | Exploração e análises | |
