@@ -51,6 +51,7 @@ python3 -m venv .venv
 | Notebook | Pergunta | Resultado |
 |---|---|---|
 | [`01_pagantes_ativos`](notebooks/01_pagantes_ativos.ipynb) | Pagantes ativos no corte | 14.753 (bate com o enunciado) |
+| [`02_qualidade_onboarding`](notebooks/02_qualidade_onboarding.ipynb) | Completude do `onboarding.csv` | ~30% sem objetivo na prática (8,6% nulo + 21,5% sem conteúdo) |
 
 ## Como montar os dados
 
