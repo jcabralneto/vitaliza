@@ -52,6 +52,8 @@ Pronto quando: a soma por plano e por canal bate com o total.
 
 A `main` é protegida: nada de commit direto. Toda mudança vai numa branch e entra por pull request com 1 aprovação.
 
+O repositório é **público** (a proteção da `main` só funciona em repositório público no plano gratuito). Por isso, notebooks sobem **sem saídas**: antes de cada commit, rode `.venv/bin/jupyter nbconvert --clear-output --inplace notebooks/*.ipynb` e confira que nenhuma linha de `dados/` aparece no diff.
+
 ## Regras de trabalho
 
 - O bruto nunca é editado. Toda limpeza gera um arquivo novo em `dados/processados/`, a partir de código versionado.
