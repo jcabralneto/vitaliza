@@ -71,7 +71,7 @@ Toda análise exploratória de um arquivo passa pelas cinco dimensões **antes**
 | **Completude** | Quanto falta, e o vazio é opcional ou é problema? | Por coluna: nulos, textos só com espaços e **pseudo-vazios** (preenchidos sem conteúdo, como `nada`, `.`, `x`, `ok`), cada um separado. Cruzar com o que o dicionário marca como opcional. | `onboarding.csv`: `objetivo_texto` 8,6% nulo, mais respostas sem conteúdo; `nivel` e `dias_por_semana` com vazios sem serem opcionais |
 | **Validade** | O valor está no formato e no domínio esperados? | Tipo, formato (data, número, e-mail), domínio de categorias contra o dicionário, faixas plausíveis | `valor` em dois formatos (`34.90` e `"R$ 34,90"`); `dias_por_semana` como `3`, `3x`, `3 vezes`; `plano_atual` com `cortesia`, fora do dicionário; 999 treinos com distância incompatível com duração ÷ ritmo |
 | **Consistência** | O mesmo fato bate entre colunas e entre arquivos? | Regras entre colunas (início ≤ fim), totais entre arquivos, mesma categoria escrita igual | `tipo` em português e inglês (`corrida`/`run`), inglês só no app desde 15/04/2026; estorno de R$ 299,90 sobre cobrança de R$ 239,90; assinatura iniciada antes do cadastro; 292 × 296 chargebacks |
-| **Unicidade** | Há uma linha por entidade, como o dicionário promete? | Duplicatas na chave declarada (`user_id`, `*_id`) e duplicatas exatas de linha | 1.941 cobranças aprovadas duplicadas em `pagamentos.csv` (mesmo `user_id`, `data_hora` e `valor`) |
+| **Unicidade** | Há uma linha por entidade, como o dicionário promete? | Duplicatas na chave declarada (`user_id`, `*_id`) e duplicatas exatas de linha | 1.941 cobranças aprovadas duplicadas em `pagamentos.csv`; 9.383 treinos em dobro em `atividades.parquet` (relógio + cópia no app), visíveis só depois de corrigir o fuso do garmin |
 | **Temporalidade** | As datas estão no fuso certo, em ordem e dentro do corte? | Fuso por origem, datas futuras ao corte (30/09/2026), cobertura do período, eventos fora de ordem | Lojas em UTC (`Z`) e site em Brasília; `uso_mensal.csv`: mês sem treino é linha ausente em 2025 e linha zerada em 2026 (média cai de 265 para 118 min só por isso); nenhuma análise usa dado posterior ao corte |
 
 Regras:
@@ -92,6 +92,7 @@ Regras:
 - `assinaturas.csv` é um retrato de 01/10/2026, não histórico. Para a situação numa data passada, usar `eventos_assinatura.csv` (desde 01/07/2024).
 - **Contas de teste** (e-mail `@vitaliza.com.br` em `usuarios.csv`) nunca contam: 14.813 ativas − 60 de teste = 14.753 pagantes. Normalizar o e-mail (`strip().lower()`) antes de testar o domínio — há 959 e-mails com maiúsculas ou espaços. Hoje as 60 coincidem com `plano_atual == 'cortesia'`, mas o critério é o e-mail.
 - `eventos_assinatura.csv` também mistura fusos: lojas em UTC (`Z`), site em horário de Brasília.
+- `atividades.parquet`: `inicio` não tem sufixo de fuso. Garmin grava em UTC (subtrair 3h); app e Apple Health em Brasília.
 - Dados com data só podem ser usados até o corte da análise (30/09/2026) — risco de vazamento no modelo.
 - Heatmaps só existem para quem era pagante na data e treinou ao ar livre; ausência de imagem é informação, não dado faltante.
 

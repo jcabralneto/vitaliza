@@ -22,6 +22,8 @@ Todo problema de qualidade ou regra de cálculo entra na tabela: uma linha por d
 | 2026-10-22 | `atividades.parquet` | Consistência | `tipo` em dois idiomas: 11 valores para 7 tipos. Todo o inglês vem do `app`, a partir de 15/04/2026 | Padronizar em português antes de contar por tipo (mapa proposto, ainda não aplicado) | `run`→`corrida`, `walk`→`caminhada`, `strength`→`forca`, `ride`→`pedal` | 376.930 (30%): 162.108 + 88.509 + 85.548 + 40.765 | Leo + Claude |
 | 2026-10-22 | `atividades.parquet` | Completude | Treinos sem distância | Não é erro: manter nulo | Vídeo (sem percurso) ou ar livre com `gps_ok = False` | 574.835 (567.511 vídeo + 7.324 GPS falho) | Leo + Claude |
 | 2026-10-22 | `atividades.parquet` | Consistência | `gps_ok = True` em todos os treinos em vídeo; ar livre com GPS falho tem distância mas não ritmo | Não interpretar `gps_ok` como "tinha GPS" | Cruzamento `tipo` × `gps_ok` | 567.511 vídeo; 7.455 sem ritmo | Leo + Claude |
+| 2026-10-22 | `atividades.parquet` | Unicidade | O mesmo treino chega duas vezes: pelo relógio e como cópia no `app` | Proposta (não aplicada): manter o registro do relógio, descartar a cópia do app | Mesma conta, tipo e duração; início a até 5 min, com o `inicio` do garmin corrigido de UTC (−3h) | 9.383 pares: 5.199 garmin + 4.184 apple_health | Leo + Claude |
+| 2026-10-22 | `atividades.parquet` | Temporalidade | `inicio` sem sufixo de fuso; garmin grava em UTC, app e apple_health em Brasília | Fuso por `origem`: garmin −3h | Testado nos dados: pares com o garmin a exatamente +3h; apple_health a 0h | 207.954 treinos do garmin | Leo + Claude |
 | 2026-10-22 | `uso_mensal.csv` | Temporalidade | Mês sem treino muda de forma na virada: linha ausente em 2025, linha com zero em 2026. Média do arquivo cai de 265 para 118 min sem mudança de comportamento | Comparar médias entre anos só com `minutos > 0`; ao montar variáveis por usuário e mês, linha ausente em 2025 vale zero | `minutos == 0`; ausência de `user_id` × `mes` em 2025 | 303.735 linhas zeradas (todas em 2026) | Leo + Claude |
 | 2026-10-22 | `uso_mensal.csv` | Temporalidade | Linhas zeradas com `sessoes_app > 0` (abriu o app sem treinar) só existem a partir de 2026 | Usar como variável só em janelas de 2026; não reconstruível para 2025 | `minutos == 0` e `sessoes_app > 0` | 262.242 (86% das zeradas) | Leo + Claude |
 | 2026-10-22 | `heatmaps_90d/` | — | Imagens entregues em zip | Extrair em `2026-07-31/` e `2026-09-30/`; remover zips e `__MACOSX` | Contagem igual ao dicionário | 12.426 + 13.047 imagens | Leo + Claude |
@@ -68,9 +70,15 @@ Código: `notebooks/03_qualidade_atividades.ipynb`. O roteiro usa o corte de 200
 
 Código: `notebooks/04_consistencia_atividades.ipynb`. Primeiro registrado como Validade; reclassificado como **Consistência**: cada valor é válido sozinho, o problema é a mesma categoria escrita de dois jeitos.
 
-A troca é abrupta: nenhum treino em inglês até 14/04/2026; a partir de 15/04, ~99% dos treinos pareados do `app` saem em inglês. Garmin e Apple Health nunca mudaram. Hipótese: versão nova do app. O resíduo em português no app (~1%, estável por mês) pode ser quem não atualizou — **não verificado** (exige `versao_app` de `usuarios.csv`).
+A troca é abrupta: nenhum treino em inglês até 14/04/2026; a partir de 15/04, ~99% dos treinos pareados do `app` saem em inglês. Garmin e Apple Health nunca mudaram. Hipótese: versão nova do app. O resíduo em português no app depois de 15/04 (4.032 treinos, ~1%) são **cópias de treinos do relógio**, que mantêm o nome original — verificado no notebook 06. A hipótese inicial ("quem não atualizou o app") estava errada.
 
 **Hipótese para o objetivo 2:** abril de 2026 foi o pior mês de churn (8,1%). Uma versão nova do app na mesma quinzena é suspeita, não causa; testar com `versao_app` e `tickets_suporte.csv` do período.
+
+### Treinos em dobro
+
+Código: `notebooks/06_unicidade_atividades.ipynb`. O fuso de cada origem foi testado antes de corrigido: nos candidatos a par, o garmin fica exatamente +3h e o apple_health 0h. Sem a correção, só os 4.184 pares do apple_health aparecem. Cada treino aparece em no máximo um par, e a distância é igual em todos.
+
+A cópia do app herda tipo (em português) e `fc_media` do relógio; os demais treinos do app têm `fc_media` vazio em 88% dos casos. Por isso o registro a manter é o do relógio. Sem deduplicar, quem tem relógio conectado parece treinar mais.
 
 ### Uso mensal na virada do ano
 
