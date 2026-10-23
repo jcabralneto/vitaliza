@@ -51,6 +51,11 @@ python3 -m venv .venv
 | Notebook | Pergunta | Resultado |
 |---|---|---|
 | [`01_pagantes_ativos`](notebooks/01_pagantes_ativos.ipynb) | Pagantes ativos no corte | 14.753 (bate com o enunciado) |
+| [`02_qualidade_onboarding`](notebooks/02_qualidade_onboarding.ipynb) | Completude do `onboarding.csv` | ~30% sem objetivo na prática (8,6% nulo + 21,5% sem conteúdo) |
+| [`03_qualidade_atividades`](notebooks/03_qualidade_atividades.ipynb) | Validade de distância e duração em `atividades.parquet` | 999 distâncias impossíveis pelo ritmo; 3.649 durações zero |
+| [`04_consistencia_atividades`](notebooks/04_consistencia_atividades.ipynb) | `tipo` em português e inglês | 11 valores → 7 tipos; inglês só no app, desde 15/04/2026 |
+| [`05_temporalidade_uso_mensal`](notebooks/05_temporalidade_uso_mensal.ipynb) | Mês sem treino em 2025 × 2026 | Ausente em 2025, zero em 2026: média cai de 265 para 118 min só pela mudança de registro |
+| [`06_unicidade_atividades`](notebooks/06_unicidade_atividades.ipynb) | Treinos que chegam pelo app e pelo relógio | 9.383 pares (5.199 garmin + 4.184 apple_health), só visíveis com o fuso do garmin corrigido |
 
 ## Como montar os dados
 
