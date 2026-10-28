@@ -1,0 +1,17 @@
+ano,plano,faixa_uso_anterior,expostos,perdas,churn_pct
+2025,anual,0 treinos,14930,1197,8.017415
+2025,anual,1–3 treinos,19175,526,2.743155
+2025,anual,4–7 treinos,10307,65,0.630639
+2025,anual,8+ treinos,18346,59,0.321596
+2025,mensal,0 treinos,1450,544,37.517241
+2025,mensal,1–3 treinos,17055,1825,10.700674
+2025,mensal,4–7 treinos,11852,1108,9.348633
+2025,mensal,8+ treinos,21479,1232,5.735835
+2026,anual,0 treinos,17769,1562,8.790590
+2026,anual,1–3 treinos,19968,610,3.054888
+2026,anual,4–7 treinos,10941,91,0.831734
+2026,anual,8+ treinos,18697,74,0.395785
+2026,mensal,0 treinos,1438,586,40.751043
+2026,mensal,1–3 treinos,16167,2133,13.193542
+2026,mensal,4–7 treinos,11581,1165,10.059580
+2026,mensal,8+ treinos,19689,1475,7.491493
