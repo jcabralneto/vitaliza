@@ -13,7 +13,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'saidas/s5_john'
+OUT=ROOT/'dados/saidas/s5_john'
 
 
 def main():

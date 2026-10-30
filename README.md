@@ -59,7 +59,7 @@ python3 -m venv .venv
 
 ## Contribuição de John — Semana 5
 
-A preparação e o diagnóstico estão em [`saidas/s5_john/sintese_para_relatorio.md`](saidas/s5_john/sintese_para_relatorio.md), com método completo em [`diagnostico.md`](saidas/s5_john/diagnostico.md).
+Após gerar as saídas localmente, a preparação e o diagnóstico estarão em `dados/saidas/s5_john/sintese_para_relatorio.md`, com método completo em `dados/saidas/s5_john/diagnostico.md`. Esses arquivos não são versionados.
 O ponto de entrada para estudo é [`notebooks/07_preparacao_diagnostico_john.ipynb`](notebooks/07_preparacao_diagnostico_john.ipynb).
 
 Para reproduzir, na raiz: `.venv/bin/python src/preparar_diagnostico_s5.py`.
@@ -68,7 +68,7 @@ Verificação das regras: `.venv/bin/python -m unittest discover -s tests -v`.
 - `dados/processados/s5_john/base_clusterizacao.csv`: 14.753 pagantes, chave `user_id` e variáveis candidatas; tratar ausências e selecionar/padronizar variáveis antes do agrupamento.
 - `dados/processados/s5_john/base_assinantes_corte.csv`: contexto complementar, valores descritivos e alertas de conciliação.
 - `dados/processados/s5_john/painel_churn_mensal.parquet`: exposições históricas, uso anterior e desfecho dentro da cobertura; não concatenar como se cada linha fosse uma pessoa distinta.
-- `saidas/s5_john/`: tabelas agregadas, quatro gráficos e dicionário das variáveis. Os arquivos individuais continuam ignorados no Git.
+- `dados/saidas/s5_john/`: tabelas agregadas, quatro gráficos e dicionário das variáveis. Assim como os arquivos individuais, essas saídas são ignoradas no Git.
 
 Os resultados não incluem clusters, previsão futura, uplift ou ROI. O PDF de leitura, quando exportado, acompanha a síntese e não substitui as tabelas e o método.
 

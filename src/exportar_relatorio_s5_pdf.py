@@ -15,7 +15,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'saidas/s5_john'
+OUT=ROOT/'dados/saidas/s5_john'
 INK=colors.HexColor('#20313e')
 TEAL=colors.HexColor('#087e8b')
 ORANGE=colors.HexColor('#d8752e')
@@ -171,7 +171,7 @@ def main():
         ['John','Síntese editável, método, tabelas, gráficos e roteiro de estudo para integrar o relatório.'],
     ],[85,405]))
     story.append(Spacer(1,5*mm))
-    para('<b>Rastreabilidade:</b> docs/enunciado.md; docs/dicionario_dados.md; decisoes.md; src/preparar_diagnostico_s5.py. Tabelas e textos completos em saidas/s5_john/. Bases individuais e manifesto em dados/processados/s5_john/.',True)
+    para('<b>Rastreabilidade:</b> docs/enunciado.md; docs/dicionario_dados.md; decisoes.md; src/preparar_diagnostico_s5.py. Tabelas e textos completos em dados/saidas/s5_john/. Bases individuais e manifesto em dados/processados/s5_john/.',True)
     para('<b>Pendente do grupo:</b> clusters, personas e priorização final. Para medir churn por cluster, aplicar a segmentação a observações históricas compatíveis; grupos feitos só com sobreviventes no corte não identificam diretamente os perfis de quem já saiu.',True)
 
     dest=OUT/'John_Preparacao_Diagnostico_S5.pdf'

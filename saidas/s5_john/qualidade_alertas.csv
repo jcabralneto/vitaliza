@@ -1,6 +1,0 @@
-arquivo,dimensao,regra,afetadas,linhas,pct_linhas
-usuarios,Temporalidade,data_cadastro: posterior ao corte (não necessariamente erro),119,64948,0.183224
-feed_posts,Temporalidade,data_hora: posterior ao corte (não necessariamente erro),122,119309,0.102255
-amizades,Temporalidade,desde: posterior ao corte (não necessariamente erro),273,113480,0.240571
-tickets_suporte,Temporalidade,resolvido_em: posterior ao corte (não necessariamente erro),41,4422,0.927182
-assinaturas,Consistência,"início anterior ao dia de cadastro; marcar, sem alterar população",42,32643,0.128665

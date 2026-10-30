@@ -34,7 +34,7 @@ Todo problema de qualidade ou regra de cálculo entra na tabela: uma linha por d
 
 ### Preparação e diagnóstico de John — S5 (27/10/2026)
 
-As decisões abaixo implementam a contribuição aprovada de preparação, integração e diagnóstico. Não substituem decisões de clusterização, personas ou priorização final das outras frentes. Execução: `src/preparar_diagnostico_s5.py`; resultados e critérios em `saidas/s5_john/`.
+As decisões abaixo implementam a contribuição aprovada de preparação, integração e diagnóstico. Não substituem decisões de clusterização, personas ou priorização final das outras frentes. Execução: `src/preparar_diagnostico_s5.py`; resultados e critérios em `dados/saidas/s5_john/`.
 
 | Data | Arquivo | Dimensão | Problema | Decisão | Critério | Linhas afetadas | Quem |
 |---|---|---|---|---|---|---|---|

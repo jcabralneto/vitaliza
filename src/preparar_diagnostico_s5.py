@@ -323,7 +323,7 @@ def svg_plot(path: Path, title: str, labels, series: dict[str, list], line=False
 
 
 def main():
-    bruto, proc, out = ROOT/"dados/brutos", ROOT/"dados/processados/s5_john", ROOT/"saidas/s5_john"
+    bruto, proc, out = ROOT/"dados/brutos", ROOT/"dados/processados/s5_john", ROOT/"dados/saidas/s5_john"
     proc.mkdir(parents=True, exist_ok=True); out.mkdir(parents=True, exist_ok=True)
     names = ["usuarios", "assinaturas", "eventos_assinatura", "pagamentos", "uso_mensal", "onboarding", "feed_posts", "amizades", "tickets_suporte", "pesquisa_saida"]
     paths = {n: bruto/f"{n}.csv" for n in names}; paths["atividades"] = bruto/"atividades.parquet"
@@ -678,7 +678,7 @@ Leonardo recebe uma base por pagante e 17 variáveis candidatas de agrupamento, 
 
 Claudinne recebe os filtros, as medidas de qualidade e as pendências de conciliação. Kiril recebe o diagnóstico e, após a clusterização, poderá construir personas ancoradas em comportamentos observados. Marcela recebe plano, canal e uma aproximação mensal da última cobrança aprovada; esse valor não é receita contábil, LTV ou benefício de retenção. A priorização final exige complementar risco com valor, custos e capacidade de ação.
 
-Fontes e rastreabilidade: enunciado e dicionário do case, decisões do grupo, código reproduzível, CSVs agregados e gráficos em `saidas/s5_john/`. As bases individuais e o manifesto de validação ficam em `dados/processados/s5_john/`, fora do repositório público. Esta seção está preparada para revisão e integração ao relatório do grupo.
+Fontes e rastreabilidade: enunciado e dicionário do case, decisões do grupo, código reproduzível, CSVs agregados e gráficos em `dados/saidas/s5_john/`. As bases individuais e o manifesto de validação ficam em `dados/processados/s5_john/`, fora do repositório público. Esta seção está preparada para revisão e integração ao relatório do grupo.
 """)
 
 
